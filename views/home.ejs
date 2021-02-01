@@ -1,0 +1,62 @@
+<%- include ('partials/header') %>
+
+<h1 class="text-primary d-flex justify-content-center">doggy</h1>
+<button class="btn-add"><a href="/doggy/usregister">Add user</a></button>
+<br>
+<div class="wrapper">
+  <table class="table">
+    <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">DogName</th>
+          <th scope="col">Date</th>
+          <th scope="col">Editar</th>
+          <th scope="col">Eliminar</th>
+        </tr>
+    </thead>
+        <% data.forEach(function(user){ %>
+        <tbody>
+          <tr>
+            <td><%=user.name%></td>
+            <td><%=user.dogs[0].name%></td>
+            <td><%=user.date%></td>
+            <td><button><a href="/doggy/user/<%=user._id%>">Editar</a></button></td>
+            <td>
+                <form method="POST" action="/doggy/user/<%= user._id %>?_method=DELETE">
+                    <input type="submit" value="x">
+                </form>
+            </td>
+          </tr>
+        </tbody>
+        <% }); %>
+</table>
+</div>
+<br>
+<hr>
+<form class="search-box" action="/doggy/db" method="POST">
+  <input list="names" name="querysearch">
+  <datalist id="names">
+    <% var searchstart = 0; %>
+    <% if (keys.length>5) { %><%
+      var searchstart = keys.length-5; %>
+    <% } %>
+   <% for (var i = searchstart; i < keys.length; i++) { %>
+      <option value=<%=keys[i].word%>></option>
+   <% } %>
+  </datalist>
+  <input type="submit" value="search">
+</form>
+<div class="wrapper">
+  <table class="table table-search">
+    <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">DogName</th>
+          <th scope="col">Date</th>
+          <th scope="col">Editar</th>
+          <th scope="col">Eliminar</th>
+        </tr>
+    </thead>
+  </table>
+</div>
+<%- include ('partials/footer') %>

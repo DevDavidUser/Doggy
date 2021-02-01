@@ -1,0 +1,18 @@
+<%- include ('partials/header') %>
+
+<h1 class="text-primary">usregister form</h1>
+<form action="/doggy/adregister" method="POST">
+    <label>Name</label>
+    <input type="text" name="username" required>
+    <label>ID</label>
+    <input type="number" name="idadmin" required>
+    <label>Password</label>
+    <input type="password" name="pasw1" required>
+    <label>Confirm password</label>
+    <input type="password" name="pasw2" required>
+    <input type="submit" value='register'>
+</form>
+<button><a href="/doggy">Cancel</a></button>
+
+
+<%- include ('partials/footer') %>

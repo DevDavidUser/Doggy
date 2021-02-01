@@ -1,0 +1,13 @@
+<%- include ('partials/header') %>
+
+<h1 class="text-primary">usregister form</h1>
+<form action="/doggy/usregister" method="POST">
+    <label>Add Name</label>
+    <input type="text" name="name">
+    <label>Add DogName</label>
+    <input type="text" name="dogname">
+    <input type="submit" value='usregister'>
+</form>
+<button><a href="/doggy/db">Cancel</a></button>
+
+<%- include ('partials/footer') %>

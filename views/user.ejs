@@ -1,0 +1,14 @@
+<%- include ('partials/header') %>
+
+<h1 class="text-primary">Name</h1>
+<form action="/doggy/user/<%= data._id %>?_method=PUT" method="POST">
+    <label>Edit your name:</label>
+    <input type="text" name="username" placeholder="<%= data.name %>" required>
+    <label>Edit your Dogname:</label>
+    <input type="text" name="dogname" placeholder="<%= data.dogs[0].name %>" required>
+    <input type="submit" value="edit">
+</form>
+<p><%= data._id %></p>
+<button><a href="/doggy/db">Cancel</a></button>
+
+<%- include ('partials/footer') %>

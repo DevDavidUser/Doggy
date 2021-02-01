@@ -1,0 +1,19 @@
+
+.wrapper {
+    display:block;
+    overflow:auto;
+    height:200px;
+    width:600px;
+    margin:auto;
+}
+thead{
+    overflow:hidden;
+}
+.search-box{
+    text-align: center;
+}
+.btn-add{
+    position: absolute;
+    top:10px;
+    right:10px;
+}
