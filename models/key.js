@@ -1,7 +1,7 @@
 const mongoose= require("mongoose");
 
 const userKey = new mongoose.Schema({
-    word:String
+    word:String,
 });
 const Key = mongoose.model('Key',userKey);
 

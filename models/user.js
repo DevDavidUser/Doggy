@@ -7,7 +7,7 @@ const Dog = mongoose.model('Dog',dogSchema);;
 const userSchema = new mongoose.Schema({
     name:String,
     date:Date,
-    dogs:[dogSchema]
+    dogname:String
 });
 const User = mongoose.model('User',userSchema);
 

@@ -34,25 +34,46 @@ app.get('/doggy',function(req,res){
 app.post('/doggy',function(req,res){
     const idadmin = req.body.idadmin;
     const pasw1=req.body.pasw1;
-    if(req.body.pasw1 == req.body.pasw2){
-        Admin.find((id),function(err,result){
-            console.log(result);
-        })
-    }else{
-        console.log("no password match");
-        res.redirect("/doggy")
-    }
+       Admin.findOne({idadmin},function(req,admin){
+           if(admin != null){
+               if(admin.password == pasw1){
+                   res.redirect("/doggy/db")
+               }else{
+                //no match password with id
+                res.redirect("/"); 
+               }
+           }else{
+               // no id found
+               res.redirect("/");
+           }
+       })
 });
 app.get('/doggy/adregister',function(req,res){
     res.render("adregister");
 });
 app.post('/doggy/adregister',function(req,res){
+    const regDate = new Date();
     if(req.body.pasw1 == req.body.pasw2){
-        Admin.create({name:req.body.username,idadmin:req.body.idadmin,password:req.body.pasw1},function(req,admin){
-            console.log(admin);
-            res.redirect('/doggy/db');
-        })
+       Admin.create({name:req.body.username,idadmin:req.body.idadmin,password:req.body.pasw1,date:regDate},function(req,admin){
+           console.log(admin);
+           res.redirect('/doggy/db');
+       })
     }
+});
+app.get('/doggy/retrieve',function(req,res){
+    res.render("retrieve",{password:""});
+});
+app.post('/doggy/retrieve',function(req,res){
+    const idadmin = req.body.idadmin;
+       Admin.exists({idadmin},function(req,admin){
+           if(admin == true){
+               Admin.findOne({idadmin},function(req,data){
+                res.render("retrieve",{password:data.password})
+               })
+           }else{
+            res.redirect("/doggy/retrieve");
+           }
+       })
 });
 app.get('/doggy/db',function(req,res){
     User.find({},function(req,data){
@@ -84,13 +105,11 @@ app.post('/doggy/usregister',function(req,res){
     const regDate = new Date();
     const newuser = new User({
         name:req.body.name,
-        date:regDate
-    });
-    newuser.dogs.push({
-        name: req.body.dogname
+        date:regDate,
+        dogname:req.body.dogname
     });
     newuser.save(function(err,user){
-        res.redirect('/');
+        res.redirect('/doggy/db');
     });
 });
 app.get('/doggy/user/:id',function(req,res){
@@ -107,7 +126,7 @@ app.put('/doggy/user/:id',function(req,res){
 });
 app.delete('/doggy/user/:id',function(req,res){
     User.findByIdAndRemove(req.params.id,function(req,data){
-        res.redirect('/');
+        res.redirect('/doggy/db');
     })
 });
 //app.get('/*',function(req,res){

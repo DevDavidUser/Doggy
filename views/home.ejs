@@ -1,7 +1,7 @@
 <%- include ('partials/header') %>
 
 <h1 class="text-primary d-flex justify-content-center">doggy</h1>
-<button class="btn-add"><a href="/doggy/usregister">Add user</a></button>
+<button class="btn-add"><a href="/doggy/usregister">Add Owner</a></button>
 <br>
 <div class="wrapper">
   <table class="table">
@@ -18,7 +18,7 @@
         <tbody>
           <tr>
             <td><%=user.name%></td>
-            <td><%=user.dogs[0].name%></td>
+            <td><%=user.dogname%></td>
             <td><%=user.date%></td>
             <td><button><a href="/doggy/user/<%=user._id%>">Editar</a></button></td>
             <td>
@@ -47,6 +47,17 @@
   <input type="submit" value="search">
 </form>
 <div class="wrapper">
+  <% if(keys.length != 0) {%>
+  <% const filterName = keys[keys.length-1].word %>
+    <% var filterList = data.filter(function(user){ %>
+      <%return user.name == filterName %>
+    <% }); %>
+    <% console.log(filterName) %>
+    <% if(filterList.length == 0 && filterName.length == 1){ %>
+      <% filterList = data.filter(function(user){ %>
+        <%return user.name.slice(0, 1) == filterName.slice(0, 1) %>
+      <% }); %>
+    <% } %>
   <table class="table table-search">
     <thead>
         <tr>
@@ -57,6 +68,28 @@
           <th scope="col">Eliminar</th>
         </tr>
     </thead>
+    <% console.log(filterList) %>
+    <%if (filterList.length != 0){%>
+      <% filterList.forEach(function(user){ %>
+        <tbody>
+            <tr>
+              <td><%=user.name%></td>
+              <td><%=user.dogname%></td>
+              <td><%=user.date%></td>
+              <td><button><a href="/doggy/user/<%=user._id%>">Editar</a></button></td>
+              <td>
+                  <form method="POST" action="/doggy/user/<%= user._id %>?_method=DELETE">
+                      <input type="submit" value="x">
+                  </form>
+              </td>
+            </tr>
+        </tbody>
+      <% }); %>
+    <%}else{ %>
+      <p>No data</p>
+    <%} %>
   </table>
+  <%} %>
 </div>
+<button><a href="/doggy">Exit</a></button>
 <%- include ('partials/footer') %>
